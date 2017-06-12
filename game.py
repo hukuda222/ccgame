@@ -32,11 +32,11 @@ def process(hands,history1,history2,charge,turn):
 def get_hands(charge,history1):
     hands=[0 for i in range(2)]
     if charge[0]>=2:
-        hands[0]=hands.append(get_hand(history1,[1,2,3,4]))
+        hands[0]=get_hand(history1,[1,2,3,4])
     elif charge[0]>=1:
-        hands[0]=hands.append(get_hand(history1,[1,2,3]))
+        hands[0]=get_hand(history1,[1,2,3])
     else:
-        hands[0]=hands.append(get_hand(history1,[1,2]))
+        hands[0]=get_hand(history1,[1,2])
 
     if charge[1]>=2:
         while hands[1] == 0:
