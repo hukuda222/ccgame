@@ -37,10 +37,10 @@ class MLP(chainer.Chain):
 
     def __init__(self, n_units, n_out):
         super(MLP, self).__init__()
-        with self.init_scope():
-            self.l1 = L.Linear(None, n_units)  # n_in -> n_units
-            self.l2 = L.Linear(None, n_units)  # n_units -> n_units
-            self.l3 = L.Linear(None, n_out)  # n_units -> n_out
+        #with self.init_scope():
+        self.l1 = L.Linear(None, n_units)  # n_in -> n_units
+        self.l2 = L.Linear(None, n_units)  # n_units -> n_units
+        self.l3 = L.Linear(None, n_out)  # n_units -> n_out
 
     def __call__(self, x):
         h1 = F.relu(self.l1(x))
@@ -61,9 +61,16 @@ serializers.load_npz("mymodel.npz", model) # "mymodel.npz"の情報をmodelに�
 
 def hand(arr):
     return model.predictor(arr)
-if __name__ == '__main__':
-    h = [4]
-    h.extend([0 for i in range(40)])
-    h=np.array([h]).astype(np.float32)
-    print(hand(h))
 
+def get_hand(arr,koho):
+    h=[list()for i in range(koho)]
+    h2=[list()for i in range(koho)]
+    for i,k in enumerate(koho):
+        h[i].append(k)
+        h[i].extend(arr)
+        h2[i]=hand(np.array([h[i]]).astype(np.float32))[0][0].data
+    return np.argmax(np.array(h2))
+
+
+if __name__ == '__main__':
+    print("po")
