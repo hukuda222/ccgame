@@ -68,12 +68,12 @@ def get_hand(arr,koho):
     new_arr=list()
     for r1 in arr:
         for r2 in r1:
-            new_arr().append(r2)
+            new_arr.append(r2)
     for i,k in enumerate(koho):
         h[i].append(k)
         h[i].extend(new_arr)
         h2[i]=hand(np.array([h[i]]).astype(np.float32))[0][0].data
-    return np.argmax(np.array(h2))
+    return np.argmax(np.array(h2))+1
 
 
 if __name__ == '__main__':
