@@ -71,7 +71,7 @@ def get_game():
 if __name__ == '__main__':
     student=list();
     ans=list();
-    for j in range(10000):
+    for j in range(100000):
         if j%100==0:
             print(j)
         result,hyoka,turn = get_game()

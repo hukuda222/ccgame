@@ -52,7 +52,7 @@ class LossFuncL(chainer.Chain):
 
 def main():
     parser = argparse.ArgumentParser(description='Chainer example: MNIST')
-    parser.add_argument('--batchsize', '-b', type=int, default=10000,
+    parser.add_argument('--batchsize', '-b', type=int, default=100000,
                         help='Number of images in each mini-batch')
     parser.add_argument('--epoch', '-e', type=int, default=200,
                         help='Number of sweeps over the dataset to train')
