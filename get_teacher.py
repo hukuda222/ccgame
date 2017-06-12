@@ -44,7 +44,7 @@ def get_hands(charge):
                 hands.append(random.randint(1,3))
             else:
                 hands.append(random.randint(1,2))
-        return hands
+    return hands
 
 def get_game():
     history1 = [[0 for j in range(2)]for i in range(20)]
