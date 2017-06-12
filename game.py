@@ -13,6 +13,8 @@ def judge(hands,history1,history2,charge,turn):
             return i
         elif hands[i] == 1 and hands[(i+1)%2] ==4:
             return i
+        elif hands[(i+1)%2] == 2 and hands[i] ==4:
+            return i
         elif hands[(i+1)%2] == 3 and hands[i] ==4:
             return i
     else:
@@ -29,14 +31,17 @@ def process(hands,history1,history2,charge,turn):
         elif hands[i] == 4:
             charge[i]-=2
 
-def get_hands(charge,history1):
+def get_hands(charge,history1,turn):
     hands=[0 for i in range(2)]
-    if charge[0]>=2:
-        hands[0]=get_hand(history1,[1,2,3,4])
-    elif charge[0]>=1:
-        hands[0]=get_hand(history1,[1,2,3])
+    if turn == 0:
+        hands[0] = 1
     else:
-        hands[0]=get_hand(history1,[1,2])
+        if charge[0]>=2:
+            hands[0]=hands.append(get_hand(history1,[1,2,3,4]))
+        elif charge[0]>=1:
+            hands[0]=hands.append(get_hand(history1,[1,2,3]))
+        else:
+            hands[0]=hands.append(get_hand(history1,[1,2]))
 
     if charge[1]>=2:
         while hands[1] == 0:
@@ -63,7 +68,7 @@ def get_game():
     win = -1
     #aが0でbが1、何もなければ-1
     while turn<20 :
-        win = judge(get_hands(charge,history1),history1,history2,charge,turn)
+        win = judge(get_hands(charge,history1,turn),history1,history2,charge,turn)
         print(history1)
         if win is not -1:
             break;
