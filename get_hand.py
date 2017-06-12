@@ -73,7 +73,7 @@ def get_hand(arr,koho):
         h[i].append(k)
         h[i].extend(new_arr)
         h2[i]=hand(np.array([h[i]]).astype(np.float32))[0][0].data
-        #print(h[i])
+        print(h[i])
     #print(1+np.argmax(np.array(h2)))
     return 1+np.argmax(np.array(h2))
 

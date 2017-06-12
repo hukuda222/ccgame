@@ -31,13 +31,17 @@ def process(hands,history1,history2,charge,turn):
 
 def get_hands(charge):
     hands=list()
-    for i in range(2):
-        if charge[i]>=2:
-            hands.append(random.randint(1,4))
-        elif charge[i]>=1:
-            hands.append(random.randint(1,3))
-        else:
-            hands.append(random.randint(1,2))
+    if charge[0] == 0 and charge[1] == 0:
+        hands.append(1)
+        hands.append(1)
+    else:
+        for i in range(2):
+            if charge[i]>=2:
+                hands.append(random.randint(1,4))
+            elif charge[i]>=1:
+                hands.append(random.randint(1,3))
+            else:
+                hands.append(random.randint(1,2))
     return hands
 
 def get_game():
