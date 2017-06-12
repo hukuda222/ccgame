@@ -46,12 +46,12 @@ def get_hands(charge,history1):
     elif charge[1]>=1:
         while hands[1] == 0:
             hands[1] = int(input())
-            if hands[1]<1 or hands[1]>4:
+            if hands[1]<1 or hands[1]>3:
                 hands[1]=0
     else:
         while hands[1] == 0:
             hands[1] = int(input())
-            if handsorhands[1]>4:
+            if hands[1]<1 or hands[1]>2:
                 hands[1]=0
     return hands
 
