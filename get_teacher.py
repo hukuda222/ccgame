@@ -10,9 +10,11 @@ def judge(hands,history1,history2,charge,turn):
     for i in range(2):
         if hands[(i+1)%2] == 1 and hands[i] == 3:
             return i
-        elif hands[i] == 1 and hands[(i+1)%2] ==4:
+        elif hands[i] == 1 and hands[(i+1)%2] == 4:
             return i
-        elif hands[(i+1)%2] == 3 and hands[i] ==4:
+        elif hands[(i+1)%2] == 2 and hands[i] == 4:
+            return i
+        elif hands[(i+1)%2] == 3 and hands[i] == 4:
             return i
     else:
         return -1
@@ -31,7 +33,7 @@ def process(hands,history1,history2,charge,turn):
 
 def get_hands(charge):
     hands=list()
-    if charge[0] == 0 and charge[1] == 0:
+    if charge[0]==0 and charge[1]==0:
         hands.append(1)
         hands.append(1)
     else:
@@ -42,7 +44,7 @@ def get_hands(charge):
                 hands.append(random.randint(1,3))
             else:
                 hands.append(random.randint(1,2))
-    return hands
+        return hands
 
 def get_game():
     history1 = [[0 for j in range(2)]for i in range(20)]
@@ -75,7 +77,7 @@ def get_game():
 if __name__ == '__main__':
     student=list();
     ans=list();
-    for j in range(100000):
+    for j in range(10000):
         if j%100==0:
             print(j)
         result,hyoka,turn = get_game()

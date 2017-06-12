@@ -54,7 +54,6 @@ class LossFuncL(chainer.Chain):
     def __call__(self, x, t):
         y = self.predictor(x)
         loss = F.mean_squared_error(y, t)
-        #report({'loss':loss}, self)
         return loss
 model = LossFuncL(MLP(args.unit, 1))
 serializers.load_npz("mymodel.npz", model) # "mymodel.npz"の情報をmodelに読み込む
@@ -73,9 +72,9 @@ def get_hand(arr,koho):
         h[i].append(k)
         h[i].extend(new_arr)
         h2[i]=hand(np.array([h[i]]).astype(np.float32))[0][0].data
-        print(h[i])
-    #print(1+np.argmax(np.array(h2)))
-    return 1+np.argmax(np.array(h2))
+    h3=np.r_[h2]
+    #print(np.argmax(h3))
+    return 1+np.argmax(h3)
 
 
 if __name__ == '__main__':
