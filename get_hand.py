@@ -63,11 +63,15 @@ def hand(arr):
     return model.predictor(arr)
 
 def get_hand(arr,koho):
-    h=[list()for i in range(koho)]
-    h2=[list()for i in range(koho)]
+    h=[list()for i in koho]
+    h2=[list()for i in koho]
+    new_arr=list()
+    for r1 in arr:
+        for r2 in r1:
+            new_arr().append(r2)
     for i,k in enumerate(koho):
         h[i].append(k)
-        h[i].extend(arr)
+        h[i].extend(new_arr)
         h2[i]=hand(np.array([h[i]]).astype(np.float32))[0][0].data
     return np.argmax(np.array(h2))
 

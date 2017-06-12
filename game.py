@@ -30,7 +30,7 @@ def process(hands,history1,history2,charge,turn):
             charge[i]-=2
 
 def get_hands(charge,history1):
-    hands=[0 for i n range(2)]
+    hands=[0 for i in range(2)]
     if charge[0]>=2:
         hands[0]=hands.append(hand(history1,[1,2,3,4]))
     elif charge[0]>=1:
@@ -41,17 +41,17 @@ def get_hands(charge,history1):
     if charge[1]>=2:
         while hands[1] != 0:
             hands[1] = int(input())
-            if hands[1]<1 || hands[1]>4:
+            if hands[1]<1 or hands[1]>4:
                 hands[1]=0
     elif charge[1]>=1:
         while hands[1] != 0:
             hands[1] = int(input())
-            if hands[1]<1 || hands[1]>4:
+            if hands[1]<1 or hands[1]>4:
                 hands[1]=0
     else:
         while hands[1] != 0:
             hands[1] = int(input())
-            if hands[1]<1 || hands[1]>4:
+            if handsorhands[1]>4:
                 hands[1]=0
     return hands
 
