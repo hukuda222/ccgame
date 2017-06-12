@@ -80,7 +80,7 @@ def main():
     optimizer.setup(model)
 
     train_x, test_x, train_y, test_y = train_test_split(student, ans, test_size=0.01, random_state=49)
-    train = TupleDataset(train_x, train_y) 
+    train = TupleDataset(train_x, train_y)
     test = TupleDataset(test_x, test_y)
 
     train_iter = chainer.iterators.SerialIterator(train, args.batchsize)
@@ -107,7 +107,7 @@ def main():
 
     # Run the training
     trainer.run()
-    serializers.save_npz("mymodel.npz", model) 
+    serializers.save_npz("mymodel.npz", model)
 
 if __name__ == '__main__':
     main()
