@@ -33,28 +33,39 @@ def process(hands,history1,history2,charge,turn):
 
 def get_hands(charge,history1,turn):
     hands=[0 for i in range(2)]
-    if charge[0]>=2:
-        hands[0]=get_hand(history1,[1,2,3,4])
-    elif charge[0]>=1:
-        hands[0]=get_hand(history1,[1,2,3])
+    if turn == 0:
+        hands[0]=1
+        hands[1]=1
     else:
-        hands[0]=get_hand(history1,[1,2])
-
-    if charge[1]>=2:
-        while hands[1] == 0:
-            hands[1] = int(input())
-            if hands[1]<1 or hands[1]>4:
-                hands[1]=0
-    elif charge[1]>=1:
-        while hands[1] == 0:
-            hands[1] = int(input())
-            if hands[1]<1 or hands[1]>3:
-                hands[1]=0
-    else:
-        while hands[1] == 0:
-            hands[1] = int(input())
-            if hands[1]<1 or hands[1]>2:
-                hands[1]=0
+        if charge[0]>=2:
+            hands[0]=get_hand(history1,[1,2,3,4])
+        elif charge[0]>=1:
+            hands[0]=get_hand(history1,[1,2,3])
+        else:
+            hands[0]=get_hand(history1,[1,2])
+        '''
+        if charge[1]>=2:
+            while hands[1] == 0:
+                hands[1] = int(input())
+                if hands[1]<1 or hands[1]>4:
+                    hands[1]=0
+        elif charge[1]>=1:
+            while hands[1] == 0:
+                hands[1] = int(input())
+                if hands[1]<1 or hands[1]>3:
+                    hands[1]=0
+        else:
+            while hands[1] == 0:
+                hands[1] = int(input())
+                if hands[1]<1 or hands[1]>2:
+                    hands[1]=0
+        '''
+        if charge[1]>=2:
+            hands[1]=random.randint(1,4)
+        elif charge[1]>=1:
+            hands[1]=random.randint(1,3)
+        else:
+            hands[1]=random.randint(1,2)
     return hands
 
 def get_game():
@@ -66,11 +77,18 @@ def get_game():
     #aが0でbが1、何もなければ-1
     while turn<20 :
         win = judge(get_hands(charge,history1,turn),history1,history2,charge,turn)
-        print(history1)
+        #print(history1)
         if win is not -1:
             break;
         turn+=1
     turn+=1
+    return win
 
 if __name__ == '__main__':
-    get_game()
+    win_count = 0
+    for i in range(100000):
+        if i%10000==0:
+            print(i)
+        if get_game()==0:
+            win_count+=1
+    print(win_count)
