@@ -34,34 +34,35 @@ args = parser.parse_args()
 
 # Network definition
 class MLP(chainer.Chain):
+    def __init__(self, n_in, n_units, n_out):
+        super(MLP, self).__init__(
+            l1=L.Linear(n_in, n_units),  # first layer
+            l2=L.Linear(n_units, n_units),  # second layer
+            l3=L.Linear(n_units, n_units),  # Third layer
+            l4=L.Linear(n_units, n_out),  # output layer
+        )
 
-    def __init__(self, n_units, n_out):
-        super(MLP, self).__init__()
-        #with self.init_scope():
-        self.l1 = L.Linear(None, n_units)  # n_in -> n_units
-        self.l2 = L.Linear(None, n_units)  # n_units -> n_units
-        self.l3 = L.Linear(None, n_out)  # n_units -> n_out
+    def __call__(self, x, t=None, train=False):
+        h = F.leaky_relu(self.l1(x))
+        h = F.leaky_relu(self.l2(h))
+        h = F.leaky_relu(self.l3(h))
+        h = self.l4(h)
 
-    def __call__(self, x):
-        h1 = F.relu(self.l1(x))
-        h2 = F.relu(self.l2(h1))
-        return self.l3(h2)
-#Loss関数
-class LossFuncL(chainer.Chain):
-    def __init__(self, predictor):
-        super(LossFuncL, self).__init__(predictor=predictor)
+        if train:
+            return F.mean_squared_error(h,t)
+        else:
+            return h
 
-    def __call__(self, x, t):
-        y = self.predictor(x)
-        loss = F.mean_squared_error(y, t)
-        return loss
-model = LossFuncL(MLP(args.unit, 1))
-serializers.load_npz("mymodel.npz", model) # "mymodel.npz"の情報をmodelに読み込む
+model = MLP(40,162,4)
+serializers.load_npz("model2.npz", model) # "mymodel.npz"の情報をmodelに読み込む
 
 def hand(arr):
-    return model.predictor(arr)
+    return model(arr)
 
 def get_hand(arr):
-    return np.argmax(hand(arr))
+    po=np.array([arr]).astype(np.float32)
+    po2 = np.array([hand(po).data])[0][0]
+    print(po2)
+    return np.argmax(po2)+1
 if __name__ == '__main__':
     print("po")

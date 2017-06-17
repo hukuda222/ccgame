@@ -119,7 +119,7 @@ class DQN:
 
     def play(self):
         #aが0でbが1、何もなければ-1
-        for p in range(100000):
+        for p in range(10000):
             self.game=Game()
             while self.game.turn<20:
                 self.act(0)
@@ -146,7 +146,7 @@ class DQN:
             act = random.randrange(self.game.get_range_max(i))+1
         error_i=0#ルールに違反した回数
         while act < 1 and act > self.game.get_range_max():#ルールに違反した場合
-            self.learn(self.history,act, -1, self.game)
+            self.learn(self.history,act, -0.7, self.game)
             x=np.array([self.game.history1],dtype=np.float32).astype(np.float32)
             pred=self.model(x)
             act=np.argmax(pred.data,axis=1)[0]+1
