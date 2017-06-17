@@ -61,22 +61,7 @@ serializers.load_npz("mymodel.npz", model) # "mymodel.npz"の情報をmodelに�
 def hand(arr):
     return model.predictor(arr)
 
-def get_hand(arr,koho):
-    h=[list()for i in koho]
-    h2=[list()for i in koho]
-    new_arr=list()
-    for r1 in arr:
-        for r2 in r1:
-            new_arr.append(r2)
-    for i,k in enumerate(koho):
-        h[i].append(k)
-        h[i].extend(new_arr)
-        h2[i]=hand(np.array([h[i]]).astype(np.float32))[0][0].data
-        #print(h2[i])
-    h3=np.r_[h2]
-    #print(np.argmax(h3))
-    return 1+np.argmax(h3)
-
-
+def get_hand(arr):
+    return np.argmax(hand(arr))
 if __name__ == '__main__':
     print("po")
