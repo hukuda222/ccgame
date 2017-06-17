@@ -59,10 +59,10 @@ serializers.load_npz("model2.npz", model) # "mymodel.npz"の情報をmodelに読
 def hand(arr):
     return model(arr)
 
-def get_hand(arr):
+def get_hand(arr,arr2):
     po=np.array([arr]).astype(np.float32)
     po2 = np.array([hand(po).data])[0][0]
     print(po2)
-    return np.argmax(po2)+1
+    return np.argmax(po2[:len(arr2)])+1
 if __name__ == '__main__':
     print("po")

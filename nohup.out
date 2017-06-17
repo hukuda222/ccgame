@@ -176,4 +176,27 @@ this epoch [##############....................................] 28.49%
 this epoch [##########################........................] 53.70%
       1800 iter, 1800 epoch / 2000 epochs
    0.18815 iters/sec. Estimated time to finish: 0:04:12.677191.
-[4A[J
+[4A[J/home/hukuda222/.pyenv/versions/3.6.0/lib/python3.6/site-packages/chainer/functions/activation/leaky_relu.py:26: RuntimeWarning: invalid value encountered in less
+  y[x[0] < 0] *= self.slope
+/home/hukuda222/.pyenv/versions/3.6.0/lib/python3.6/site-packages/chainer/functions/activation/leaky_relu.py:43: RuntimeWarning: invalid value encountered in less
+  gx[y[0] < 0] *= self.slope
+/home/hukuda222/.pyenv/versions/3.6.0/lib/python3.6/site-packages/chainer/functions/activation/leaky_relu.py:26: RuntimeWarning: invalid value encountered in less
+  y[x[0] < 0] *= self.slope
+/home/hukuda222/.pyenv/versions/3.6.0/lib/python3.6/site-packages/chainer/functions/activation/leaky_relu.py:43: RuntimeWarning: invalid value encountered in less
+  gx[y[0] < 0] *= self.slope
+Traceback (most recent call last):
+  File "dqnlearn.py", line 195, in <module>
+    dqn.play()
+  File "dqnlearn.py", line 129, in play
+    self.getGameResult()
+  File "dqnlearn.py", line 165, in getGameResult
+    self.learn(self.history,self.last_move, self.rwin, self.game)
+AttributeError: 'DQN' object has no attribute 'rwin'
+/home/hukuda222/.pyenv/versions/3.6.0/lib/python3.6/site-packages/chainer/functions/activation/leaky_relu.py:26: RuntimeWarning: invalid value encountered in less
+  y[x[0] < 0] *= self.slope
+/home/hukuda222/.pyenv/versions/3.6.0/lib/python3.6/site-packages/chainer/functions/activation/leaky_relu.py:43: RuntimeWarning: invalid value encountered in less
+  gx[y[0] < 0] *= self.slope
+/home/hukuda222/.pyenv/versions/3.6.0/lib/python3.6/site-packages/chainer/functions/activation/leaky_relu.py:26: RuntimeWarning: invalid value encountered in less
+  y[x[0] < 0] *= self.slope
+/home/hukuda222/.pyenv/versions/3.6.0/lib/python3.6/site-packages/chainer/functions/activation/leaky_relu.py:43: RuntimeWarning: invalid value encountered in less
+  gx[y[0] < 0] *= self.slope
