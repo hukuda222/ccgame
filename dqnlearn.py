@@ -134,22 +134,18 @@ class DQN:
 
     def play(self):
         #aが0でbが1、何もなければ-1
-        self.win_count=0
-        for p in range(200000):
-            if p%1000 ==0:
-                print(self.win_count)
-            self.game=Game()
-            while self.game.turn<20:
-                self.act(0)
-                self.game.get_hand_random(1)
-                self.game.process()
-                self.game.win = self.game.judge()
-                self.getGameResult()
-                if self.game.win is not -1:
-                    if self.game.win==0:
-                        self.win_count+=1
-                    break;
-                self.game.turn+=1
+        self.game=Game()
+        while self.game.turn<20:
+            self.act(0)
+            self.game.get_hand_random(1)
+            self.game.process()
+            self.game.win = self.game.judge()
+            self.getGameResult()
+            if self.game.win is not -1:
+                if self.game.win==0:
+                    self.win_count+=1
+                break;
+            self.game.turn+=1
         serializers.save_npz("model2.npz", self.model)
 
     def act(self,i):

@@ -3,104 +3,111 @@ import pickle
 import numpy as np
 from get_hand import get_hand
 
-#1が貯め、2が守り、3が攻撃、4が大攻撃
-max_count = 20
+class Game:
+    def __init__(self):
+        self.history1 = [[0 for j in range(2)]for i in range(20)]#プレイヤー1にとっての履歴
+        self.history2 = [[0 for j in range(2)]for i in range(20)]#プレイヤー2にとっての履歴
+        self.charge = [0 for i in range(2)]#ため時間
+        self.turn = 0
+        self.win = -1
+        self.prays = [0 for i in range(2)]
+        self.hands = [0 for i in range(2)]
 
-def judge(self):
-    #1はチャージ、2はガード、4は攻撃、5は大攻撃、3は祈り
-    for i in range(2):
-        if self.hands[(i+1)%2] == 1 and self.hands[i] == 4:
-            return i
-        if self.hands[(i+1)%2] == 3 and self.hands[i] == 4:
-            return i
-        elif self.hands[i] == 1 and self.hands[(i+1)%2] == 5:
-            return i
-        elif self.hands[(i+1)%2] == 2 and self.hands[i] == 5:
-            return i
-        elif self.hands[(i+1)%2] == 3 and self.hands[i] == 5:
-            return i
-        elif self.hands[(i+1)%2] == 4 and self.hands[i] == 5:
-            return i
-        elif self.hands[i] == 1 and self.hands[(i+1)%2] == 5:
-            return i
-        elif self.prays[i] == 2 and self.hands[i] == 3:
-            return i
-    else:
-        return -1
+    def judge(self):
+        #1はチャージ、2はガード、4は攻撃、5は大攻撃、3は祈り
+        for i in range(2):
+            if self.hands[(i+1)%2] == 1 and self.hands[i] == 4:
+                return i
+            if self.hands[(i+1)%2] == 3 and self.hands[i] == 4:
+                return i
+            elif self.hands[i] == 1 and self.hands[(i+1)%2] == 5:
+                return i
+            elif self.hands[(i+1)%2] == 2 and self.hands[i] == 5:
+                return i
+            elif self.hands[(i+1)%2] == 3 and self.hands[i] == 5:
+                return i
+            elif self.hands[(i+1)%2] == 4 and self.hands[i] == 5:
+                return i
+            elif self.hands[i] == 1 and self.hands[(i+1)%2] == 5:
+                return i
+            elif self.prays[i] == 2 and self.hands[i] == 3:
+                return i
+        else:
+            return -1
 
-def process(self):
-    for i in range(2):
-        self.history1[self.turn][i]=self.hands[i]
-        self.history2[self.turn][i]=self.hands[(i+1)%2]
-        if self.hands[i] == 1:
-            self.prays[i]=0
-            self.charge[i]+=1
-        elif self.hands[i] == 3:
-            self.prays[i]=0
-            self.charge[i]-=1
-        elif self.hands[i] == 4:
-            self.prays[i]=0
-            self.charge[i]-=2
-        elif self.hands[i] == 5:
-            self.prays[i]+=1
+    def process(self):
+        for i in range(2):
+            self.history1[self.turn][i]=self.hands[i]
+            self.history2[self.turn][i]=self.hands[(i+1)%2]
+            if self.hands[i] == 1:
+                self.prays[i]=0
+                self.charge[i]+=1
+            elif self.hands[i] == 3:
+                self.prays[i]=0
+                self.charge[i]-=1
+            elif self.hands[i] == 4:
+                self.prays[i]=0
+                self.charge[i]-=2
+            elif self.hands[i] == 5:
+                self.prays[i]+=1
 
-def get_hands(charge,history1,turn):
-    hands=[0 for i in range(2)]
-    if charge[0]>=2:
-        hands[0]=get_hand(history1,[1,2,3,4,5])
-    elif charge[0]>=1:
-        hands[0]=get_hand(history1,[1,2,3,4])
-    else:
-        hands[0]=get_hand(history1,[1,2,3])
-    if charge[1]>=2:
-        while hands[1] == 0:
-            hands[1] = int(input())
-            if hands[1]<1 or hands[1]>4:
-                hands[1]=0
-    elif charge[1]>=1:
-        while hands[1] == 0:
-            hands[1] = int(input())
-            if hands[1]<1 or hands[1]>3:
-                hands[1]=0
-    else:
-        while hands[1] == 0:
-            hands[1] = int(input())
-            if hands[1]<1 or hands[1]>2:
-                hands[1]=0
-    '''
-    if charge[1]>=2:
-        hands[1]=random.randint(1,4)
-    elif charge[1]>=1:
-        hands[1]=random.randint(1,3)
-    else:
-        hands[1]=random.randint(1,2)
-    '''
-    return hands
+    def get_hand_input(self,i):
+        self.hands[i] = 0
+        if self.charge[i]>=2:
+            while self.hands[i] == 0:
+                self.hands[i] = int(input())
+                if self.hands[i] <1 or self.hands[i] > 5:
+                    self.hands[i]=0
+        elif self.charge[i]>=1:
+            while self.hands[i] == 0:
+                self.hands[i] = int(input())
+                if self.hands[i] <1 or self.hands[i] > 4:
+                    self.hands[i] = 0
+        else:
+            while self.hands[i] == 0:
+                self.hands[i]= int(input())
+                if self.hands[i] < 1 or self.hands[i] > 3:
+                    self.hands[i] = 0
+        #return self.hands[i]
 
-def get_game():
-    history1 = [[0 for j in range(2)]for i in range(20)]
-    history2 = [[0 for j in range(2)]for i in range(20)]
-    charge = [0 for i in range(2)]
-    turn = 0;
-    win = -1
-    #aが0でbが1、何もなければ-1
-    while turn<20 :
-        win = judge(get_hands(charge,history1,turn),history1,history2,charge,turn)
-        print(history1)
-        if win is not -1:
-            break;
-        turn+=1
-    turn+=1
-    return win
+    def get_hand_random(self,i):
+        if self.charge[i]>=2:
+            self.hands[i] = random.randint(1,5)
+        elif self.charge[i]>=1:
+            self.hands[i] = random.randint(1,4)
+        else:
+            self.hands[i] = random.randint(1,3)
+        #return self.hands[i]
+
+    def get_hand_dqn(self,i):
+        if self.charge[i]>=2:
+            self.hands[i] = get_hand(self.history1,[1,2,3,4,5])
+        elif self.charge[i]>=1:
+            self.hands[i] = get_hand(self.history1,[1,2,3,4])
+        else:
+            self.hands[i] = get_hand(self.history1,[1,2,3])
+        #return self.hands[i]
+
+    def get_range_max(self,i):
+        range_max = 0
+        if self.charge[i]>=2:
+            range_max = 5
+        elif self.charge[i]>=1:
+            range_max = 4
+        else:
+            range_max = 3
+        return range_max
+
+
 
 if __name__ == '__main__':
-    get_game()
-    '''
-    win_count = 0
-    for i in range(100000):
-        if i%10000==0:
-            print(i)
-        if get_game()==0:
-            win_count+=1
-    print(win_count)
-    '''
+    game=Game()
+    while game.turn<20:
+        get_hand_dqn(0)
+        game.get_hand_random(1)
+        game.process()
+        game.win = game.judge()
+        print(game.history1)
+        if game.win is not -1:
+            break;
+        game.turn+=1
