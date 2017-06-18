@@ -42,13 +42,13 @@ class Game:
             if self.hands[i] == 1:
                 self.prays[i]=0
                 self.charge[i]+=1
-            elif self.hands[i] == 3:
-                self.prays[i]=0
-                self.charge[i]-=1
             elif self.hands[i] == 4:
                 self.prays[i]=0
-                self.charge[i]-=2
+                self.charge[i]-=1
             elif self.hands[i] == 5:
+                self.prays[i]=0
+                self.charge[i]-=2
+            elif self.hands[i] == 3:
                 self.prays[i]+=1
 
     def get_hand_input(self,i):
@@ -68,7 +68,6 @@ class Game:
                 self.hands[i]= int(input())
                 if self.hands[i] < 1 or self.hands[i] > 3:
                     self.hands[i] = 0
-        #return self.hands[i]
 
     def get_hand_random(self,i):
         if self.charge[i]>=2:
@@ -77,7 +76,18 @@ class Game:
             self.hands[i] = random.randint(1,4)
         else:
             self.hands[i] = random.randint(1,3)
-        #return self.hands[i]
+
+    def get_hand_speed(self,i):
+        koho = [1,4]
+        if self.charge[i] >= 2:
+            self.hands[i] = 5
+        elif self.charge[i] >= 1:
+            self.hands[i] = koho[random.randint(1,2)]
+        else:
+            self.hands[i] = 1
+
+    def get_hand_three(self,i):
+        self.hands[i] = 3
 
     def get_hand_dqn(self,i):
         if self.charge[i]>=2:

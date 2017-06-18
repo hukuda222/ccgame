@@ -71,13 +71,13 @@ class Game:
             if self.hands[i] == 1:
                 self.prays[i]=0
                 self.charge[i]+=1
-            elif self.hands[i] == 3:
-                self.prays[i]=0
-                self.charge[i]-=1
             elif self.hands[i] == 4:
                 self.prays[i]=0
-                self.charge[i]-=2
+                self.charge[i]-=1
             elif self.hands[i] == 5:
+                self.prays[i]=0
+                self.charge[i]-=2
+            elif self.hands[i] == 3:
                 self.prays[i]+=1
 
     def get_hand_random(self,i):
@@ -108,6 +108,18 @@ class Game:
                     self.hands[i] = 0
         return self.hands[i]
 
+    def get_hand_speed(self,i):
+        koho = [1,4]
+        if self.charge[i] >= 2:
+            self.hands[i] = 5
+        elif self.charge[i] >= 1:
+            self.hands[i] = koho[random.randint(1,2)]
+        else:
+            self.hands[i] = 1
+
+    def get_hand_three(self,i):
+        self.hands[i] = 3
+
     def get_range_max(self,i):
         range_max = 0
         if self.charge[i]>=2:
@@ -134,10 +146,16 @@ class DQN:
 
     def play(self):
         #aが0でbが1、何もなければ-1
-        self.game=Game()
+        self.game = Game()
+        self.type = random.randint(1,3)
         while self.game.turn<20:
             self.act(0)
-            self.game.get_hand_random(1)
+            if self.type == 1:
+                self.game.get_hand_random(1)
+            elif self.type == 2:
+                self.game.get_hand_speed(1)
+            elif self.type == 3:
+                self.game.get_hand_three(1)
             self.game.process()
             self.game.win = self.game.judge()
             self.getGameResult()
