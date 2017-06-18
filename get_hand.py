@@ -54,7 +54,7 @@ class MLP(chainer.Chain):
             return h
 
 model = MLP(40,162,4)
-serializers.load_npz("model2.npz", model) # "mymodel.npz"の情報をmodelに読み込む
+serializers.load_npz("model2.npz", model)
 
 def hand(arr):
     return model(arr)
