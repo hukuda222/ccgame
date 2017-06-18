@@ -53,7 +53,7 @@ class MLP(chainer.Chain):
         else:
             return h
 
-model = MLP(40,162,4)
+model = MLP(40,162,5)
 serializers.load_npz("model2.npz", model)
 
 def hand(arr):
