@@ -115,7 +115,9 @@ if __name__ == '__main__':
         game.win = game.judge()
         print(game.history1)
         if game.turn==29:
-            if self.game.win==0:
-                self.win_count+=1
+            if game.win==0:
+                print("win")
+            else:
+                print("lose")
             break;
         game.turn+=1
