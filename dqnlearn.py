@@ -34,7 +34,7 @@ class MLP(chainer.Chain):
 
 class Game:
     def __init__(self):
-        self.history = [[0 for j in range(2)]for i in range(50)]#プレイヤーにとっての履歴
+        self.history = [[0 for j in range(2)]for i in range(25)]#プレイヤーにとっての履歴
         self.charge = [0 for i in range(2)]#ため時間
         self.turn = 0
         self.win = -1
@@ -142,6 +142,9 @@ class Game:
             self.hands[i] = random.randint(1,3)
         return self.hands[i]
 
+    def get_hand_all_three(self,i):
+        self.hands[i] = 3
+
     def get_hand_two(self,i):
         if self.charge[(i+1)%2]>=1:
             self.hands[i] = 2
@@ -168,7 +171,7 @@ class Game:
 
 class DQN:
     def __init__(self,e=1):
-        self.model = MLP(100,162,5)
+        self.model = MLP(60,162,5)
         #serializers.load_npz("model2.npz", self.model)
         self.optimizer = optimizers.Adam()
         self.optimizer.setup(self.model)
@@ -182,12 +185,12 @@ class DQN:
     def play(self):
         self.win_count=0
         #aが0でbが1、何もなければ-1
-        for p in range (100000):
+        for p in range (20000):
             if p % 1000 == 0:
                 print(self.win_count,self.e)
                 self.win_count=0
             self.game = Game()
-            while self.game.turn<50:
+            while self.game.turn<30:
                 self.act(0)
                 if p%6 == 0 and self.e < 0.25:
                     self.game.get_hand_three(1)
@@ -205,7 +208,7 @@ class DQN:
                     self.game.get_hand_random(1)
                 self.game.process()
                 self.game.judge()
-                if self.game.turn==49:
+                if self.game.turn==29:
                     #どっちの方が勝ってるか
                     self.game.win=np.argmax(np.array(self.game.points))
                     if self.game.win==0:
@@ -223,7 +226,7 @@ class DQN:
         #print(self.last_pred,np.argmax(pred.data,axis=1)[0])
         act=np.argmax(pred.data,axis=1)[0]+1
         if self.e > 0.2:
-            self.e -= 1/(200000)
+            self.e -= 1/(20000)
         if random.random() < self.e:
             act = random.randint(1,self.game.get_range_max(i))
         error_i=0#ルールに違反した回数

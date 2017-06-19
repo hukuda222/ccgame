@@ -5,8 +5,8 @@ from get_hand import get_hand
 
 class Game:
     def __init__(self):
-        self.history1 = [[0 for j in range(2)]for i in range(50)]#プレイヤー1にとっての履歴
-        self.history2 = [[0 for j in range(2)]for i in range(50)]#プレイヤー2にとっての履歴
+        self.history1 = [[0 for j in range(2)]for i in range(30)]#プレイヤー1にとっての履歴
+        self.history2 = [[0 for j in range(2)]for i in range(30)]#プレイヤー2にとっての履歴
         self.charge = [0 for i in range(2)]#ため時間
         self.turn = 0
         self.win = -1
@@ -95,7 +95,6 @@ class Game:
             self.hands[i] = get_hand(self.history1,[1,2,3,4])
         else:
             self.hands[i] = get_hand(self.history1,[1,2,3])
-        #return self.hands[i]
 
     def get_range_max(self,i):
         range_max = 0
@@ -107,17 +106,15 @@ class Game:
             range_max = 3
         return range_max
 
-
-
 if __name__ == '__main__':
     game=Game()
-    while game.turn<50:
+    while game.turn<30:
         game.get_hand_dqn(0)
         game.get_hand_input(1)
         game.process()
         game.win = game.judge()
         print(game.history1)
-        if game.turn==49:
+        if game.turn==29:
             if self.game.win==0:
                 self.win_count+=1
             break;
