@@ -5,35 +5,34 @@ from get_hand import get_hand
 
 class Game:
     def __init__(self):
-        self.history1 = [[0 for j in range(2)]for i in range(20)]#プレイヤー1にとっての履歴
-        self.history2 = [[0 for j in range(2)]for i in range(20)]#プレイヤー2にとっての履歴
+        self.history1 = [[0 for j in range(2)]for i in range(50)]#プレイヤー1にとっての履歴
+        self.history2 = [[0 for j in range(2)]for i in range(50)]#プレイヤー2にとっての履歴
         self.charge = [0 for i in range(2)]#ため時間
         self.turn = 0
         self.win = -1
         self.prays = [0 for i in range(2)]
         self.hands = [0 for i in range(2)]
+        self.points = [0 for i in range(2)]
 
     def judge(self):
         #1はチャージ、2はガード、4は攻撃、5は大攻撃、3は祈り
         for i in range(2):
-            if self.hands[(i+1)%2] == 1 and self.hands[i] == 4:
-                return i
+            if self.prays[i] == 3 and self.hands[i] == 3 and self.hands[(i+1)%2] <= 3:
+                self.points[i]+=1
+            elif self.hands[(i+1)%2] == 1 and self.hands[i] == 4:
+                self.points[i]+=1
             if self.hands[(i+1)%2] == 3 and self.hands[i] == 4:
-                return i
+                self.points[i]+=1
             elif self.hands[i] == 1 and self.hands[(i+1)%2] == 5:
-                return i
+                self.points[i]+=1
             elif self.hands[(i+1)%2] == 2 and self.hands[i] == 5:
-                return i
+                self.points[i]+=1
             elif self.hands[(i+1)%2] == 3 and self.hands[i] == 5:
-                return i
+                self.points[i]+=1
             elif self.hands[(i+1)%2] == 4 and self.hands[i] == 5:
-                return i
+                self.points[i]+=1
             elif self.hands[i] == 1 and self.hands[(i+1)%2] == 5:
-                return i
-            elif self.prays[i] == 2 and self.hands[i] == 3:
-                return i
-        else:
-            return -1
+                self.points[i]+=1
 
     def process(self):
         for i in range(2):
@@ -112,12 +111,14 @@ class Game:
 
 if __name__ == '__main__':
     game=Game()
-    while game.turn<20:
-        get_hand_dqn(0)
-        game.get_hand_random(1)
+    while game.turn<50:
+        game.get_hand_dqn(0)
+        game.get_hand_input(1)
         game.process()
         game.win = game.judge()
         print(game.history1)
-        if game.win is not -1:
+        if game.turn==49:
+            if self.game.win==0:
+                self.win_count+=1
             break;
         game.turn+=1
