@@ -191,7 +191,7 @@ class DQN:
     def play(self):
         self.win_count=0
         #aが0でbが1、何もなければ-1
-        for p in range (100000):
+        for p in range (500000):
             if p % 1000 == 0:
                 print(self.win_count,self.e)
                 self.win_count=0
@@ -232,7 +232,7 @@ class DQN:
         #print(self.last_pred,np.argmax(pred.data,axis=1)[0])
         act=np.argmax(pred.data,axis=1)[0]+1
         if self.e > 0.2:
-            self.e -= 1/(200000)
+            self.e -= 1/(2000000)
         if random.random() < self.e:
             act = random.randint(1,self.game.get_range_max(i))
         error_i=0#ルールに違反した回数
