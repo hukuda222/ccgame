@@ -15,14 +15,20 @@ class MLP(chainer.Chain):
             l1=L.Linear(n_in, n_units),  # first layer
             l2=L.Linear(n_units, n_units),  # second layer
             l3=L.Linear(n_units, n_units),  # Third layer
-            l4=L.Linear(n_units, n_out),  # output layer
+            l4=L.Linear(n_units, n_units),  # Third layer
+            l5=L.Linear(n_units, n_units),  # Third layer
+            l6=L.Linear(n_units, n_out),  # output layer
         )
 
     def __call__(self, x, t=None, train=False):
         h = F.leaky_relu(self.l1(x))
         h = F.leaky_relu(self.l2(h))
         h = F.leaky_relu(self.l3(h))
-        h = self.l4(h)
+        h = F.leaky_relu(self.l4(h))
+        h = F.dropout(h, ratio=0.1,train=True)
+        h = F.leaky_relu(self.l5(h))
+        h = F.dropout(h, ratio=0.2,train=True)
+        h = self.l6(h)
 
         if train:
             return F.mean_squared_error(h,t)
@@ -171,7 +177,7 @@ class Game:
 
 class DQN:
     def __init__(self,e=1):
-        self.model = MLP(60,162,5)
+        self.model = MLP(60,400,5)
         #serializers.load_npz("model2.npz", self.model)
         self.optimizer = optimizers.Adam()
         self.optimizer.setup(self.model)
