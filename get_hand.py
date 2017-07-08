@@ -48,9 +48,9 @@ class MLP(chainer.Chain):
         h = F.leaky_relu(self.l2(h))
         h = F.leaky_relu(self.l3(h))
         h = F.leaky_relu(self.l4(h))
-        h = F.dropout(h, ratio=0.1,train=True)
+        h = F.dropout(h, ratio=0.1)
         h = F.leaky_relu(self.l5(h))
-        h = F.dropout(h, ratio=0.2,train=True)
+        h = F.dropout(h, ratio=0.2)
         h = self.l6(h)
 
         if train:

@@ -25,9 +25,9 @@ class MLP(chainer.Chain):
         h = F.leaky_relu(self.l2(h))
         h = F.leaky_relu(self.l3(h))
         h = F.leaky_relu(self.l4(h))
-        h = F.dropout(h, ratio=0.1,train=True)
+        h = F.dropout(h, ratio=0.1)
         h = F.leaky_relu(self.l5(h))
-        h = F.dropout(h, ratio=0.2,train=True)
+        h = F.dropout(h, ratio=0.2)
         h = self.l6(h)
 
         if train:
@@ -178,10 +178,10 @@ class Game:
 class DQN:
     def __init__(self,e=1):
         self.model = MLP(60,400,5)
-        #serializers.load_npz("model2.npz", self.model)
+        serializers.load_npz("model2.npz", self.model)
         self.optimizer = optimizers.Adam()
         self.optimizer.setup(self.model)
-        self.e=e
+        self.e=0.2
         self.gamma=0.8
         self.last_move=None
         self.history=None
@@ -191,7 +191,7 @@ class DQN:
     def play(self):
         self.win_count=0
         #aが0でbが1、何もなければ-1
-        for p in range (500000):
+        for p in range (8000):
             if p % 1000 == 0:
                 print(self.win_count,self.e)
                 self.win_count=0
